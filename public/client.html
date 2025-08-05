@@ -259,7 +259,6 @@
   </div>
 
   <script>
-    /* Tu JS original sin cambios */
     let ws, localStream, pc;
     let myName = "";
     let targetName = "";
@@ -270,7 +269,8 @@
       myName = document.getElementById('username').value.trim();
       if (!myName) return alert("Pon un nombre");
 
-      ws = new WebSocket(`ws://100.0.3.230:3000`);
+      // Cambiado a wss y tu URL en Render
+      ws = new WebSocket(`wss://call-center-zhwp.onrender.com`);
       ws.onopen = () => {
         ws.send(JSON.stringify({ type: 'register', name: myName }));
       };
@@ -324,7 +324,6 @@
 
     async function handleSignal({ from, signal }) {
       if (signal.type === 'offer') {
-        // Mostrar tarjeta para aceptar o rechazar
         caller = from;
         incomingSignal = signal;
         document.getElementById('callerName').textContent = `Llamada entrante de ${from}`;
@@ -368,7 +367,6 @@
     function rejectCall() {
       document.getElementById('incoming-call').style.display = 'none';
       document.getElementById('status').textContent = `Llamada de ${caller} rechazada`;
-      // Podrías notificar al llamador aquí si quieres
       caller = "";
       incomingSignal = null;
     }
